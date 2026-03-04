@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Sign Up - HR Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'home/styles/login.css'%}">
+</head>
+
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h1 class="login-title">HR Management</h1>
+                <p class="login-subtitle">Employee Management System</p>
+            </div>
+            <!-- Tabs -->
+            <div class="login-tabs">
+                <button id="loginTab" type="button" class="login-tab login-tab-active">Login</button>
+                <button id="signupTab" type="button" class="login-tab">Sign Up</button>
+            </div>
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="Enter your password">
+                </div>
+                <div class="form-row">
+                    <div class="form-check">
+                        <input type="checkbox" id="rememberLogin">
+                        <label for="rememberLogin">Remember me</label>
+                    </div>
+                    <button type="button" id="forgotPasswordBtn" class="forgot-link">Forgot?</button>
+                </div>
+                <button id="btnLogin" type="button" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="login-form hidden">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" required placeholder="Repeat your password">
+                </div>
+                <button id="btnSignup" type="button" class="login-btn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </button>
+            </form>
+            <!-- Forgot Password Modal (hidden by default) -->
+            <div id="forgotPasswordModal" class="modal hidden">
+                <div class="modal-content">
+                    <button id="closeForgotModal" class="modal-close">&times;</button>
+                    <h2 class="modal-title">Reset Password</h2>
+                    <p class="modal-desc">Enter your email address and we'll send you a link to reset your password.</p>
+                    <input type="email" id="forgotEmail" class="modal-input" placeholder="your@email.com">
+                    <button class="modal-btn">Send Reset Link</button>
+                </div>
+            </div>
+            <!-- Footer -->
+            <div class="login-footer">
+                <p>&copy; 2026 HR Management System. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="{% static 'home/scripts/login.js' %}"></script>
+</body>
+
+</html>
