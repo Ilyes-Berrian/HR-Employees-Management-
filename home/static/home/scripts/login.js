@@ -1,73 +1,167 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const loginEmail = document.getElementById("loginEmail");
-  const loginPassword = document.getElementById("loginPassword");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
 
-  const signupName = document.getElementById("signupName");
-  const signupEmail = document.getElementById("signupEmail");
-  const signupPassword = document.getElementById("signupPassword");
-  const signupConfirmPassword = document.getElementById("signupConfirmPassword");
-  
-  const loginTab = document.getElementById("loginTab");
-  const signupTab = document.getElementById("signupTab");
-  const btnLogin = document.getElementById("btnLogin");
-  const btnSignup = document.getElementById("btnSignup");
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
 
-  if (!loginTab || !signupTab || !btnLogin || !btnSignup) {
-    return;
-  }
+    const signupName = document.getElementById("signupName");
+    const signupUsername = document.getElementById("signupUsername");
+    const signupEmail = document.getElementById("signupEmail");
+    const signupPassword = document.getElementById("signupPassword");
+    const signupConfirmPassword = document.getElementById("signupConfirmPassword");
 
-  const showLogin = () => {
-    loginForm.classList.remove("hidden");
-    signupForm.classList.add("hidden");
-    loginTab.classList.add("login-tab-active");
-    signupTab.classList.remove("login-tab-active");
-  };
+    const loginAuthError = document.getElementById("loginAuthError");
+    const signupAuthError = document.getElementById("signupAuthError");
+    const signupConfirmPasswordError = document.getElementById("signupConfirmPasswordError");
 
-  const showSignup = () => {
-    loginForm.classList.add("hidden");
-    signupForm.classList.remove("hidden");
-    loginTab.classList.remove("login-tab-active");
-    signupTab.classList.add("login-tab-active");
-  };
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnSignup = document.getElementById("btnSignup");
 
-  loginTab.addEventListener("click", showLogin);
-  signupTab.addEventListener("click", showSignup);
-
-  // Login form – front-end only (no Firebase)
-  btnLogin.addEventListener("click", async () => {
-
-    const email = loginEmail.value.trim();
-    const password = loginPassword.value.trim();
-
-    if (!email || !password) {
-      alert("Please enter both email and password.");
-      return;
+    if (!loginForm || !signupForm || !loginTab || !signupTab || !btnLogin || !btnSignup || !loginAuthError || !signupAuthError || !signupConfirmPasswordError) {
+        return;
     }
 
-    console.log("Login submitted:", { email });
-    alert("connect to Django or Firebase later.");
-  });
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+            return parts.pop().split(";").shift();
+        }
+        return "";
+    };
 
-  // Sign up form – front-end only (no Firebase)
-  btnSignup.addEventListener("click", async () => {
+    const hideError = (element) => {
+        element.classList.add("hidden");
+    };
 
-    const name = signupName.value.trim();
-    const email = signupEmail.value.trim();
-    const password = signupPassword.value.trim();
-    const confirmPassword = signupConfirmPassword.value.trim();
+    const showError = (element, message) => {
+        element.textContent = message;
+        element.classList.remove("hidden");
+    };
 
-    if (!name || !email || !password || !confirmPassword) {
-      alert("Please fill in all fields.");
-      return;
-    }
+    const clearAllErrors = () => {
+        hideError(loginAuthError);
+        hideError(signupAuthError);
+        hideError(signupConfirmPasswordError);
+    };
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+    const showLogin = () => {
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        loginTab.classList.add("login-tab-active");
+        signupTab.classList.remove("login-tab-active");
+        clearAllErrors();
+    };
 
-    console.log("Signup submitted:", { name, email });
-    alert("connect to Django or Firebase later.");
-    showLogin();
-  });
+    const showSignup = () => {
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+        loginTab.classList.remove("login-tab-active");
+        signupTab.classList.add("login-tab-active");
+        clearAllErrors();
+    };
+
+    loginTab.addEventListener("click", showLogin);
+    signupTab.addEventListener("click", showSignup);
+
+    const postJson = async(url, payload) => {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie("csrftoken")
+            },
+            body: JSON.stringify(payload)
+        });
+
+        let data = {};
+        try {
+            data = await response.json();
+        } catch {
+            data = {};
+        }
+
+        return { response, data };
+    };
+
+    // Login form using Django Authentication.
+    btnLogin.addEventListener("click", async() => {
+        clearAllErrors();
+
+        const email = loginEmail.value.trim();
+        const password = loginPassword.value.trim();
+
+        if (!email || !password) {
+            showError(loginAuthError, "Please enter both email and password.");
+            return;
+        }
+
+        try {
+            const { response, data } = await postJson("/home/auth/login", { email, password });
+
+            if (!response.ok) {
+                showError(loginAuthError, data.message || "Invalid email or password. Please try again.");
+                return;
+            }
+
+            window.location.href = "/home/";
+        } catch (error) {
+            console.log(error.message);
+            showError(loginAuthError, "Login failed. Please try again.");
+        }
+    });
+
+    // Sign up form using Django Authentication.
+    btnSignup.addEventListener("click", async() => {
+        clearAllErrors();
+
+        const name = signupName.value.trim();
+        const username = signupUsername.value.trim();
+        const email = signupEmail.value.trim();
+        const password = signupPassword.value.trim();
+        const confirmPassword = signupConfirmPassword.value.trim();
+
+        if (!name || !username || !email || !password || !confirmPassword) {
+            showError(signupAuthError, "Please fill in all fields.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showError(signupConfirmPasswordError, "Password doesn't match for password confirmation.");
+            return;
+        }
+
+        try {
+            const { response, data } = await postJson("/home/auth/signup", {
+                name,
+                username,
+                email,
+                password,
+                confirmPassword
+            });
+
+            if (!response.ok) {
+                if (data.code === "password_mismatch") {
+                    showError(signupConfirmPasswordError, data.message || "Password doesn't match for password confirmation.");
+                } else {
+                    showError(signupAuthError, data.message || "Sign up failed.");
+                }
+                return;
+            }
+
+            showLogin();
+            loginEmail.value = email;
+            loginPassword.value = "";
+        } catch (error) {
+            console.log(error.message);
+            showError(signupAuthError, "Sign up failed. Please try again.");
+        }
+    });
+
+    [loginEmail, loginPassword, signupName, signupUsername, signupEmail, signupPassword, signupConfirmPassword].forEach((input) => {
+        input.addEventListener("input", clearAllErrors);
+    });
 });
