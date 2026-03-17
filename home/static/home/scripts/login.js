@@ -4,27 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loginEmail = document.getElementById("loginEmail");
     const loginPassword = document.getElementById("loginPassword");
-    const firebaseConfig = {
-        apiKey: "AIzaSyBtgWu9o4ch8e54bYq_CSLPOOwMuenrmQg",
-        authDomain: "hr-management-5db8b.firebaseapp.com",
-        projectId: "hr-management-5db8b",
-        storageBucket: "hr-management-5db8b.firebasestorage.app",
-        messagingSenderId: "82299461173",
-        appId: "1:82299461173:web:c45f93def8479c43011b7c"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
-
-    // Your web app's Firebase configuration
-
-
-    const loginEmail = document.getElementById("loginEmail");
-    const loginPassword = document.getElementById("loginPassword");
 
     const signupName = document.getElementById("signupName");
     const signupUsername = document.getElementById("signupUsername");
@@ -74,21 +53,9 @@ document.addEventListener("DOMContentLoaded", () => {
         signupForm.classList.add("hidden");
         loginTab.classList.add("login-tab-active");
         signupTab.classList.remove("login-tab-active");
-    };
-    const showLogin = () => {
-        loginForm.classList.remove("hidden");
-        signupForm.classList.add("hidden");
-        loginTab.classList.add("login-tab-active");
-        signupTab.classList.remove("login-tab-active");
         clearAllErrors();
     };
 
-    const showSignup = () => {
-        loginForm.classList.add("hidden");
-        signupForm.classList.remove("hidden");
-        loginTab.classList.remove("login-tab-active");
-        signupTab.classList.add("login-tab-active");
-    };
     const showSignup = () => {
         loginForm.classList.add("hidden");
         signupForm.classList.remove("hidden");
