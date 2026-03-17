@@ -102,7 +102,7 @@
 .form-group label {
     font-size: 0.95rem;
     font-weight: 500;
-    color: #374151;
+    color: #0b4fbc;
     text-align: left;
     width: 100%;
 }
@@ -120,6 +120,22 @@
 .form-group input:focus {
     border-color: #2563eb;
     box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+.form-error {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    padding: 0.65rem 0.8rem;
+    border: 2px solid #ef4444;
+    border-left: 6px solid #dc2626;
+    border-radius: 0.5rem;
+    background: #fff1f2;
+    color: #991b1b;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.35;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.12);
 }
 
 .form-row {
