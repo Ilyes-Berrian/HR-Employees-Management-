@@ -1,73 +1,126 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js";
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  const loginEmail = document.getElementById("loginEmail");
-  const loginPassword = document.getElementById("loginPassword");
+    const firebaseConfig = {
+        apiKey: "AIzaSyBtgWu9o4ch8e54bYq_CSLPOOwMuenrmQg",
+        authDomain: "hr-management-5db8b.firebaseapp.com",
+        projectId: "hr-management-5db8b",
+        storageBucket: "hr-management-5db8b.firebasestorage.app",
+        messagingSenderId: "82299461173",
+        appId: "1:82299461173:web:c45f93def8479c43011b7c"
+    };
 
-  const signupName = document.getElementById("signupName");
-  const signupEmail = document.getElementById("signupEmail");
-  const signupPassword = document.getElementById("signupPassword");
-  const signupConfirmPassword = document.getElementById("signupConfirmPassword");
-  
-  const loginTab = document.getElementById("loginTab");
-  const signupTab = document.getElementById("signupTab");
-  const btnLogin = document.getElementById("btnLogin");
-  const btnSignup = document.getElementById("btnSignup");
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-  if (!loginTab || !signupTab || !btnLogin || !btnSignup) {
-    return;
-  }
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
 
-  const showLogin = () => {
-    loginForm.classList.remove("hidden");
-    signupForm.classList.add("hidden");
-    loginTab.classList.add("login-tab-active");
-    signupTab.classList.remove("login-tab-active");
-  };
+    // Your web app's Firebase configuration
 
-  const showSignup = () => {
-    loginForm.classList.add("hidden");
-    signupForm.classList.remove("hidden");
-    loginTab.classList.remove("login-tab-active");
-    signupTab.classList.add("login-tab-active");
-  };
 
-  loginTab.addEventListener("click", showLogin);
-  signupTab.addEventListener("click", showSignup);
+    const loginEmail = document.getElementById("loginEmail");
+    const loginPassword = document.getElementById("loginPassword");
 
-  // Login form – front-end only (no Firebase)
-  btnLogin.addEventListener("click", async () => {
+    const signupName = document.getElementById("signupName");
+    const signupEmail = document.getElementById("signupEmail");
+    const signupPassword = document.getElementById("signupPassword");
+    const signupConfirmPassword = document.getElementById("signupConfirmPassword");
 
-    const email = loginEmail.value.trim();
-    const password = loginPassword.value.trim();
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const btnLogin = document.getElementById("btnLogin");
+    const btnSignup = document.getElementById("btnSignup");
 
-    if (!email || !password) {
-      alert("Please enter both email and password.");
-      return;
+    if (!loginForm || !signupForm || !loginTab || !signupTab || !btnLogin || !btnSignup) {
+        return;
     }
 
-    console.log("Login submitted:", { email });
-    alert("connect to Django or Firebase later.");
-  });
+    const showLogin = () => {
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        loginTab.classList.add("login-tab-active");
+        signupTab.classList.remove("login-tab-active");
+    };
 
-  // Sign up form – front-end only (no Firebase)
-  btnSignup.addEventListener("click", async () => {
+    const showSignup = () => {
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+        loginTab.classList.remove("login-tab-active");
+        signupTab.classList.add("login-tab-active");
+    };
 
-    const name = signupName.value.trim();
-    const email = signupEmail.value.trim();
-    const password = signupPassword.value.trim();
-    const confirmPassword = signupConfirmPassword.value.trim();
+    loginTab.addEventListener("click", showLogin);
+    signupTab.addEventListener("click", showSignup);
 
-    if (!name || !email || !password || !confirmPassword) {
-      alert("Please fill in all fields.");
-      return;
-    }
+    // Login form using Firebase Authentication.
+    btnLogin.addEventListener("click", async() => {
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+        const email = loginEmail.value.trim();
+        const password = loginPassword.value.trim();
 
-    console.log("Signup submitted:", { name, email });
-    alert("connect to Django or Firebase later.");
-    showLogin();
-  });
+        if (!email || !password) {
+            showError(loginAuthError, "Please enter both email and password.");
+            return;
+        }
+
+        try {
+            const userCridential = await signInWithEmailAndPassword(auth, email, password);
+            console.log(userCridential.user.email);
+            alert("Login successful!");
+        } catch (error) {
+            console.log(error.message);
+            if (error.code === "auth/invalid-credential") {
+                showError(loginAuthError, "Invalid email or password. Please try again.");
+            } else {
+                showError(loginAuthError, error.message || "Login failed.");
+            }
+        }
+    });
+
+    // Sign up form using Firebase Authentication.
+    btnSignup.addEventListener("click", async() => {
+
+        clearSignupErrors();
+        const name = signupName.value.trim();
+        const email = signupEmail.value.trim();
+        const password = signupPassword.value.trim();
+        const confirmPassword = signupConfirmPassword.value.trim();
+
+        if (!name || !email || !password || !confirmPassword) {
+            showError(signupAuthError, "Please fill in all fields.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            showError(signupConfirmError, "Passwords do not match.");
+            return;
+        }
+
+        try {
+            const userCridential = await createUserWithEmailAndPassword(auth, email, password);
+            console.log(userCridential.user.email);
+            alert("Account created successfully!");
+            showLogin();
+        } catch (error) {
+            console.log(error.message);
+            if (error.code === "auth/email-already-in-use") {
+                showError(signupAuthError, "This email is already registered. Please login or use a different email.");
+            } else if (error.code === "auth/weak-password") {
+                showError(signupAuthError, "Password is too weak. Please use at least 6 characters.");
+            } else if (error.code === "auth/invalid-email") {
+                showError(signupAuthError, "Invalid email address. Please check and try again.");
+            } else {
+                showError(signupAuthError, error.message || "Sign up failed.");
+            }
+        }
+    });
+
 });
