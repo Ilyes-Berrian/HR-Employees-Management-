@@ -1,66 +1,100 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<!--
+    HRM Dashboard - Main page template
+    Responsive layout with left sidebar, dark mode toggle, and main content area.
+    Uses Django static files: base.css and dashboard.js
+    -->
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MY Site</title>
+    <title>HRM Dashboard</title>
     <link rel="stylesheet" href="{% static 'home/styles/base.css' %}">
 </head>
 
-<body>
-    <div id="login">
-      <div class="header">
-        <h1>HR MANAGEMENT APP 🚀</h1>
-        <h3>Practice Your Knowledge</h3>
-      </div>
-      <form>
-        <div class="group">
-            <input id="username" required>
-            <label>Username</label>
-        </div>
-        <div class="group">
-          <input id="txtEmail" type="email" required>
-          <label>Email</label>
-        </div>
-
-        <div class="group">
-          <input id="txtPassword" type="password" required>
-          <label>Password</label>
-        </div>
-
-        <div id="divLoginError" class="group">
-          <div id="lblLoginErrorMessage" class="errorlabel">Error message</div>
-        </div>
-
-        <button id="btnLogin" type="button" class="button buttonBlue">Log in</button>
-        <button id="btnSignup" type="button" class="button buttonBlue">Sign up</button>
-      </form>
-
-      <form class="msg">
-        <div class="group">
-          <h2>
-            <div id="logoutAuthState" class="authlabel"></div>
-          </h2>
-        </div>
-      </form>
-    </div>
-    <div id="app">
-        <div class="header">
-            <h1>Welcome to Your Amazing App</h1>
-        </div>
-
-        <form>
-            <div class="group">
-                <h4>
-                    <div id="lblAuthState" class="authlabel"></div>
-                </h4>
+<body class="dashboard-body">
+    <!-- Flex container: sidebar + main content -->
+    <div class="dashboard-wrapper ">
+        <!-- Left sidebar: navigation, brand, search, dark mode -->
+        <aside class="sidebar " aria-label="Main navigation">
+            <!-- Brand header with collapse/expand toggle -->
+            <div class="sidebar-header">
+                <div class="brand">
+                    <div class="brand-logo ">HR</div>
+                    <div class="brand-text">
+                        <span class="brand-title">HR Manager</span>
+                    </div>
+                </div>
             </div>
-            <button id="btnLogout" type="button" class="button buttonBlue">Log out</button>
-        </form>
+            <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar">
+                <span class="sidebar-toggle-chevron" aria-hidden="true"></span>
+            </button>
+            <!-- Primary navigation links -->
+            <nav class="sidebar-nav">
+                <button class="nav-item active" type="button" data-page="Dashboard">
+                        <i class="fas fa-home" aria-hidden="true"></i>
+                        <span class="nav-label">Dashboard</span>
+                </button>
+                <button class="nav-item" type="button" data-page="Database">
+                        <i class="fas fa-database" aria-hidden="true"></i>
+                        <span class="nav-label">DataBase</span>
+                    </button>
+                <button class="nav-item" type="button" data-page="Add">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        <span class="nav-label">Add</span>
+                    </button>
+                <button class="nav-item" type="button" data-page="Attestations">
+                        <i class="fas fa-certificate" aria-hidden="true"></i>
+                        <span class="nav-label">Attestations</span>
+                    </button>
+                <button class="nav-item" type="button" data-page="Settings">
+                        <i class="fas fa-cog" aria-hidden="true"></i>
+                        <span class="nav-label">Settings</span>
+                </button>
+            </nav>
 
+            <!-- Footer: logout + dark mode toggle -->
+            <div class="sidebar-footer">
+                <button class="nav-item" type="button" data-page="Profile">
+                    <i class="fas fa-user" aria-hidden="true"></i>
+                    <span class="nav-label">Profile</span>
+                </button>
+                <button class="nav-item" type="button" data-page="Logout">
+                    <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                    <span class="nav-label">Logout</span>
+                </button>
+
+                <div class="darkmode-row">
+                    <div class="darkmode-label">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                        <span class="nav-label">Dark mode</span>
+                    </div>
+                    <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeToggle" aria-label="Toggle dark mode">
+                            <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main content area -->
+        <main class="main-content">
+
+            <!-- Dashboard cards grid -->
+            <section class="content-grid">
+                <article class="content-card">
+                    <h2 id="pageTitle">Dashboard</h2>
+                    <p id="pageDescription">Select an item from the sidebar to view its content.</p>
+                </article>
+            </section>
+        </main>
     </div>
+
+    <!-- Dashboard script: dark mode toggle, sidebar collapse -->
+    <script src="{% static 'home/scripts/dashboard.js' %}"></script>
 </body>
 
 </html>
