@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sequences',
     'home',
 ]
 
@@ -46,6 +47,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'home.middleware.AdminSuperuserOnlyMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -77,9 +79,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hr_management',
-        'USER': 'root',
-        'PASSWORD': 'softdev3033',
-        'HOST': '127.0.0.1',
+        'USER': 'subroot1',
+        'PASSWORD': 'hr_man26',
+        'HOST': 'localhost',
         'PORT': '3306',
     }
 }
@@ -120,3 +122,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+LOGIN_URL = 'home:login'
+LOGIN_REDIRECT_URL = 'home:index'

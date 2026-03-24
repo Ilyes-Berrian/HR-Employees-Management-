@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     break;
                 case "Logout":
                     pageDescription.textContent = "Logging out...";
+                    window.location.href = "/home/auth/logout";
                     break;
                 default:
                     pageDescription.textContent = "Section selected.";
