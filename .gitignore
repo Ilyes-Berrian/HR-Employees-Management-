@@ -2,15 +2,18 @@
 .env.*
 *.env
 
+# Python caches
 __pycache__/
 *.py[cod]
 *$py.class
 
+# Virtual environments (yours is named .env)
 .venv/
 venv/
 env/
 ENV/
 
+# Django local DB
 db.sqlite3
 db.sqlite3-journal
 
@@ -28,6 +31,7 @@ nox/
 .mypy_cache/
 .ruff_cache/
 
+# IDE
 .vscode/
 .idea/
 .DS_Store
