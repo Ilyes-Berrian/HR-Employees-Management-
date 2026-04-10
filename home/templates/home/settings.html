@@ -1,0 +1,118 @@
+<!-- Settings page layout: sub-sidebar + main panel -->
+<section class="settings-layout hidden" id="settingsLayout" aria-label="Settings content">
+    <aside class="settings-sub-sidebar" aria-label="Settings sections">
+        <button class="settings-tab active" type="button" data-settings-tab="personal">
+            <i class="fas fa-user-circle" aria-hidden="true"></i>
+            <span>Personal</span>
+        </button>
+        <button class="settings-tab" type="button" data-settings-tab="security">
+            <i class="fas fa-shield-halved" aria-hidden="true"></i>
+            <span>Security</span>
+        </button>
+    </aside>
+
+    <div class="settings-main">
+        <article class="settings-card">
+            <header class="settings-card-header">
+                <h2 class="settings-page-title">Settings</h2>
+            </header>
+
+            <div class="settings-panels" id="settingsPanels">
+                <!-- Personal tab -->
+                <section class="settings-panel active" data-settings-panel="personal" aria-labelledby="personal-heading">
+                    <h3 id="personal-heading" class="settings-section-title">Personal Information</h3>
+                    <form id="personalSettingsForm" class="settings-form" action="/home/auth/profile/update" method="post" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="profile-upload-block">
+                            <label class="profile-upload-label" for="profileImage">Profile Picture</label>
+                            <div class="profile-upload-row">
+                                <div class="profile-avatar" id="profileAvatar" aria-hidden="true">HR</div>
+                                <div class="profile-upload-actions">
+                                    <input class="profile-upload-input" type="file" id="profileImage" name="profileImage" accept="image/*">
+                                    <input type="hidden" id="removeProfileImage" name="removeProfileImage" value="0">
+                                    <label class="profile-upload-button" for="profileImage">Upload Image</label>
+                                    <button class="profile-upload-delete hidden" id="profileImageDelete" type="button" aria-label="Remove profile image">
+                                        <i class="fas fa-trash"></i> Remove Image
+                                    </button>
+                                    <p class="profile-upload-file" id="profileFileName">No file selected</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-grid two-col">
+                            <div class="field-group">
+                                <label for="fullName">Full Name</label>
+                                <input id="fullName" name="fullName" type="text" placeholder="Enter your full name">
+                            </div>
+                            <div class="field-group">
+                                <label for="username">Username</label>
+                                <input id="username" name="username" type="text" placeholder="Enter your username">
+                            </div>
+                            <div class="field-group field-group-full">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" name="bio" rows="4" placeholder="Write a short bio about your role, expertise, or contact details"></textarea>
+                            </div>
+                        </div>
+                        <p class="profile-save-status" id="profileSaveStatus" aria-live="polite"></p>
+
+                        <div class="form-actions">
+                            <button id="btnsave" class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Save Changes</button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Security tab -->
+                <section class="settings-panel" data-settings-panel="security" aria-labelledby="security-heading">
+                    <h3 id="security-heading" class="settings-section-title">Security</h3>
+                    <form id="securitySettingsForm" class="settings-form" action="/home/auth/password/update" method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="form-grid">
+                            <div class="field-group password-group">
+                                <label for="currentPassword">Current Password</label>
+                                <div class="password-input-wrap">
+                                    <input id="currentPassword" name="currentPassword" type="password" autocomplete="current-password" placeholder="Enter current password">
+                                    <button class="password-toggle" type="button" data-toggle-password="currentPassword" aria-label="Show or hide current password">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="field-group password-group">
+                                <label for="newPassword">New Password</label>
+                                <div class="password-input-wrap">
+                                    <input id="newPassword" name="newPassword" type="password" autocomplete="new-password" placeholder="Enter new password">
+                                    <button class="password-toggle" type="button" data-toggle-password="newPassword" aria-label="Show or hide new password">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength" aria-live="polite">
+                                    <span class="strength-label">Strength</span>
+                                    <div class="strength-meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                        <span class="strength-fill" id="strengthFill"></span>
+                                    </div>
+                                    <span class="strength-value" id="strengthValue">Weak</span>
+                                </div>
+                            </div>
+
+                            <div class="field-group password-group">
+                                <label for="confirmPassword">Confirm New Password</label>
+                                <div class="password-input-wrap">
+                                    <input id="confirmPassword" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Confirm new password">
+                                    <button class="password-toggle" type="button" data-toggle-password="confirmPassword" aria-label="Show or hide confirm password">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <p class="match-feedback" id="passwordMatchFeedback" aria-live="polite"></p>
+                            </div>
+                        </div>
+                        <p class="password-save-status" id="passwordSaveStatus" aria-live="polite"></p>
+
+                        <div class="form-actions">
+                            <button class="btn btn-primary" type="submit">Change Password</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </article>
+    </div>
+</section>

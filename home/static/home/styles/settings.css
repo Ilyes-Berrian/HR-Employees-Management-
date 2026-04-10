@@ -1,0 +1,560 @@
+/*
+ * HRM Settings - Styles for the Settings page sub-sidebar and forms.
+ * Loaded alongside base.css on the main dashboard page.
+ * Relies on CSS custom properties defined in base.css (:root).
+ */
+
+
+/* ========== Layout ========== */
+
+.settings-layout {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+
+/* ========== Sub-sidebar ========== */
+
+.settings-sub-sidebar {
+    background: linear-gradient(180deg, #eaf3ff 0%, #deebff 100%);
+    border: 1px solid #c8dcff;
+    border-radius: 18px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: sticky;
+    top: 24px;
+}
+
+.settings-tab {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    color: #34527a;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.settings-tab i {
+    width: 18px;
+    text-align: center;
+    color: #6d8fc0;
+}
+
+.settings-tab:hover {
+    background: rgba(63, 122, 255, 0.12);
+    transform: translateX(2px);
+}
+
+.settings-tab.active {
+    background: rgba(63, 122, 255, 0.2);
+    color: #2756b3;
+    font-weight: 700;
+}
+
+.settings-tab.active i {
+    color: #2756b3;
+}
+
+
+/* ========== Main content card ========== */
+
+.settings-main {
+    min-width: 0;
+}
+
+.settings-card {
+    background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+    border: 1px solid #dce7fb;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 10px 26px rgba(26, 66, 140, 0.1);
+}
+
+.settings-card-header {
+    margin-bottom: 14px;
+    border-bottom: 1px solid #e1e9f8;
+    padding-bottom: 12px;
+}
+
+.settings-page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+
+/* ========== Tab panels ========== */
+
+.settings-panel {
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.settings-panel.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    height: auto;
+    overflow: visible;
+}
+
+.settings-section-title {
+    margin: 0 0 16px;
+    font-size: 17px;
+    color: #1f3658;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+/* ========== Profile picture upload ========== */
+
+.profile-upload-block {
+    padding: 14px;
+    border: 1px solid #d8e6fb;
+    border-radius: 14px;
+    background: #f7faff;
+}
+
+.profile-upload-label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #4d668e;
+    font-weight: 600;
+}
+
+.profile-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.profile-avatar {
+    width: 62px;
+    height: 62px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #3f7aff, #5da2ff);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.profile-upload-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.profile-upload-input {
+    display: none;
+}
+
+.profile-upload-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(63, 122, 255, 0.14);
+    color: #2f5fc7;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.profile-upload-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 10px;
+    background: rgba(207, 77, 91, 0.14);
+    color: #b73445;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.profile-upload-delete:hover {
+    background: rgba(207, 77, 91, 0.2);
+}
+
+.profile-upload-file {
+    margin: 0;
+    font-size: 12px;
+    color: #7d8faa;
+}
+
+.profile-save-status {
+    margin: 0;
+    min-height: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #738aa9;
+}
+
+.profile-save-status.success {
+    color: #2f5fc7;
+}
+
+.profile-save-status.error {
+    color: #cf4d5b;
+}
+
+
+/* ========== Form fields ========== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+}
+
+.form-grid.two-col {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field-group-full {
+    grid-column: 1 / -1;
+}
+
+.field-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4f688f;
+}
+
+.field-group input,
+.field-group textarea {
+    width: 100%;
+    border: 1px solid #d2dff4;
+    border-radius: 11px;
+    background: #ffffff;
+    color: #1f302d;
+    padding: 10px 12px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.field-group textarea {
+    resize: vertical;
+    min-height: 108px;
+    font-family: inherit;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+    border-color: #3f7aff;
+    box-shadow: 0 0 0 3px rgba(63, 122, 255, 0.18);
+}
+
+
+/* ========== Password controls ========== */
+
+.password-input-wrap {
+    position: relative;
+}
+
+.password-input-wrap input {
+    padding-right: 44px;
+}
+
+.password-toggle {
+    border: 0;
+    background: transparent;
+    color: #6d86ac;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: #3f7aff;
+}
+
+.password-strength {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+.strength-label,
+.strength-value {
+    font-size: 12px;
+    color: #6880a4;
+    font-weight: 600;
+}
+
+.strength-meter {
+    height: 8px;
+    border-radius: 999px;
+    background: #e2e9f7;
+    overflow: hidden;
+}
+
+.strength-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: #f08f2d;
+    transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.match-feedback {
+    margin: 6px 0 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #738aa9;
+    min-height: 18px;
+}
+
+.match-feedback.valid {
+    color: #2f5fc7;
+}
+
+.match-feedback.invalid {
+    color: #cf4d5b;
+}
+
+.password-save-status {
+    margin: 0;
+    min-height: 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #738aa9;
+}
+
+.password-save-status.success {
+    color: #2f5fc7;
+}
+
+.password-save-status.error {
+    color: #cf4d5b;
+}
+
+
+/* ========== Buttons ========== */
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn {
+    border: 0;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #3f7aff, #4c90ff);
+    color: #ffffff;
+    box-shadow: 0 8px 16px rgba(63, 122, 255, 0.28);
+}
+
+.btn-secondary {
+    background: #eaf1ff;
+    color: #2f5fc7;
+}
+
+
+/* ========== Dark mode overrides ========== */
+
+.dashboard-body.dark-mode .settings-sub-sidebar {
+    background: linear-gradient(180deg, rgba(63, 122, 255, 0.24) 0%, rgba(63, 122, 255, 0.14) 100%);
+    border-color: rgba(125, 168, 255, 0.28);
+}
+
+.dashboard-body.dark-mode .settings-tab {
+    color: #d5e4ff;
+}
+
+.dashboard-body.dark-mode .settings-tab i {
+    color: #abc5ff;
+}
+
+.dashboard-body.dark-mode .settings-tab:hover {
+    background: rgba(125, 168, 255, 0.2);
+}
+
+.dashboard-body.dark-mode .settings-tab.active {
+    background: rgba(125, 168, 255, 0.32);
+    color: #e6efff;
+}
+
+.dashboard-body.dark-mode .settings-card {
+    background: radial-gradient(circle at top right, rgba(125, 168, 255, 0.2), transparent 52%), #081426;
+    border-color: rgba(125, 168, 255, 0.24);
+}
+
+.dashboard-body.dark-mode .settings-card-header {
+    border-color: rgba(148, 163, 184, 0.24);
+}
+
+.dashboard-body.dark-mode .settings-section-title,
+.dashboard-body.dark-mode .settings-page-title {
+    color: #e5e7eb;
+}
+
+.dashboard-body.dark-mode .field-group label,
+.dashboard-body.dark-mode .profile-upload-label {
+    color: #b8caf0;
+}
+
+.dashboard-body.dark-mode .field-group input {
+    background: rgba(15, 23, 42, 0.75);
+    border-color: rgba(148, 163, 184, 0.36);
+    color: #e5e7eb;
+}
+
+.dashboard-body.dark-mode .field-group textarea {
+    background: rgba(15, 23, 42, 0.75);
+    border-color: rgba(148, 163, 184, 0.36);
+    color: #e5e7eb;
+}
+
+.dashboard-body.dark-mode .profile-upload-block {
+    background: rgba(15, 23, 42, 0.55);
+    border-color: rgba(148, 163, 184, 0.24);
+}
+
+.dashboard-body.dark-mode .profile-upload-file,
+.dashboard-body.dark-mode .strength-label,
+.dashboard-body.dark-mode .strength-value {
+    color: #b8c6e4;
+}
+
+.dashboard-body.dark-mode .profile-save-status {
+    color: #b8c6e4;
+}
+
+.dashboard-body.dark-mode .profile-save-status.success {
+    color: #93b8ff;
+}
+
+.dashboard-body.dark-mode .match-feedback {
+    color: #b8c6e4;
+}
+
+.dashboard-body.dark-mode .match-feedback.valid {
+    color: #93b8ff;
+}
+
+.dashboard-body.dark-mode .match-feedback.invalid {
+    color: #fca5a5;
+}
+
+.dashboard-body.dark-mode .password-save-status {
+    color: #b8c6e4;
+}
+
+.dashboard-body.dark-mode .password-save-status.success {
+    color: #93b8ff;
+}
+
+.dashboard-body.dark-mode .btn-secondary {
+    background: rgba(125, 168, 255, 0.2);
+    color: #dbe8ff;
+}
+
+
+/* ========== Responsive breakpoints ========== */
+
+@media (max-width: 900px) {
+    .settings-layout {
+        grid-template-columns: 1fr;
+    }
+    .settings-sub-sidebar {
+        position: static;
+        top: auto;
+        flex-direction: row;
+        align-items: center;
+    }
+    .settings-tab {
+        justify-content: center;
+    }
+    .form-grid.two-col {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 720px) {
+    .settings-card {
+        padding: 16px;
+    }
+    .settings-page-title {
+        font-size: 21px;
+    }
+    .settings-sub-sidebar {
+        padding: 8px;
+        gap: 6px;
+    }
+    .settings-tab {
+        font-size: 13px;
+        padding: 9px;
+    }
+    .profile-upload-row {
+        align-items: flex-start;
+    }
+    .password-strength {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+    }
+    .form-actions {
+        justify-content: stretch;
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+    }
+}

@@ -1,0 +1,52 @@
+<!-- Profile page layout -->
+<section class="profile-layout hidden" id="profileLayout" aria-label="Profile content">
+    <div class="profile-card">
+
+        <!-- Edit button — top-right corner -->
+        <button class="btn btn-secondary profile-edit-btn" id="profileEditBtn" type="button">
+            <i class="fas fa-edit"></i> Edit
+        </button>
+
+        <!-- ── Header: avatar + identity ── -->
+        <div class="profile-header">
+            <div class="profile-page-avatar" id="profilePageAvatar" aria-hidden="true">HR</div>
+            <div class="profile-identity">
+                <h1 class="profile-fullname" id="profilePageFullName">—</h1>
+                <p class="profile-bio-text" id="profilePageBio"></p>
+                <span class="profile-active-badge" id="profilePageBadge">
+                    <i class="fas fa-circle"></i> Active
+                </span>
+            </div>
+        </div>
+
+        <!-- ── Divider ── -->
+        <div class="profile-divider"></div>
+
+        <!-- ── Info grid ── -->
+        <p class="profile-info-section-title">Contact Information</p>
+        <div class="profile-info-grid">
+            <div class="profile-info-item">
+                <span class="profile-info-icon"><i class="fas fa-at"></i></span>
+                <div class="profile-info-text">
+                    <span class="profile-info-label">Username</span>
+                    <span class="profile-info-value" id="profilePageUsername">—</span>
+                </div>
+            </div>
+            <div class="profile-info-item">
+                <span class="profile-info-icon"><i class="fas fa-envelope"></i></span>
+                <div class="profile-info-text">
+                    <span class="profile-info-label">Email</span>
+                    <span class="profile-info-value" id="profilePageEmail">—</span>
+                </div>
+            </div>
+            <div class="profile-info-item">
+                <span class="profile-info-icon"><i class="fas fa-shield-halved"></i></span>
+                <div class="profile-info-text">
+                    <span class="profile-info-label">Account Status</span>
+                    <span class="profile-info-value" id="profilePageStatusText">Active</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

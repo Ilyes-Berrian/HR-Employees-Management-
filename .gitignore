@@ -12,6 +12,7 @@ __pycache__/
 venv/
 env/
 ENV/
+HRMenv/
 
 # Django local DB
 db.sqlite3
