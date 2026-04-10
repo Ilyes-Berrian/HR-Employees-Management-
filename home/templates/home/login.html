@@ -43,7 +43,7 @@
                         <input type="checkbox" id="rememberLogin">
                         <label for="rememberLogin">Remember me</label>
                     </div>
-                    <button type="button" id="forgotPasswordBtn" class="forgot-link">Forgot?</button>
+                    <button id="forgotPasswordBtn" type="button" class="forgot-link">Forgot?</button>
                 </div>
                 <button id="btnLogin" type="button" class="login-btn">
                     <i class="fas fa-sign-in-alt"></i> Sign In
@@ -86,18 +86,40 @@
                 <div class="modal-content">
                     <button id="closeForgotModal" class="modal-close">&times;</button>
                     <h2 class="modal-title">Reset Password</h2>
-                    <p class="modal-desc">Enter your email address and we'll send you a link to reset your password.</p>
-                    <input type="email" id="forgotEmail" class="modal-input" placeholder="your@email.com">
-                    <button class="modal-btn">Send Reset Link</button>
+                    <p id="forgotStepDesc" class="modal-desc">Enter your email address and we'll send you a code to reset your password.</p>
+
+                    <div id="forgotStepEmail">
+                        <label for="forgotEmailInput" class="modal-label">Email Address</label>
+                        <input id="forgotEmailInput" type="email" class="modal-input" placeholder="your@email.com" required>
+                        <button id="forgotSendCodeBtn" type="button" class="modal-btn">Confirm</button>
+                    </div>
+
+                    <div id="forgotStepCode" class="hidden">
+                        <label for="forgotCodeInput" class="modal-label">Verification Code</label>
+                        <input id="forgotCodeInput" type="text" class="modal-input" placeholder="Enter the 6-digit code" inputmode="numeric" maxlength="6" required>
+                        <button id="forgotVerifyCodeBtn" type="button" class="modal-btn">Verify Code</button>
+                    </div>
+
+                    <div id="forgotStepReset" class="hidden">
+                        <label for="forgotNewPasswordInput" class="modal-label">New Password</label>
+                        <input id="forgotNewPasswordInput" type="password" class="modal-input" placeholder="Create a new password" required>
+
+                        <label for="forgotConfirmPasswordInput" class="modal-label">Confirm New Password</label>
+                        <input id="forgotConfirmPasswordInput" type="password" class="modal-input" placeholder="Repeat the new password" required>
+
+                        <button id="forgotResetPasswordBtn" type="button" class="modal-btn">Change Password</button>
+                    </div>
+
+                    <p id="forgotFeedback" class="form-error hidden" role="alert" aria-live="polite"></p>
                 </div>
             </div>
             <!-- Footer -->
-            <div class="login-footer">
+            <div class="login-footer ">
                 <p>&copy; 2026 HR Management System. All rights reserved.</p>
             </div>
         </div>
     </div>
-    <script type="module" src="{% static 'home/scripts/login.js' %}"></script>
+    <script type="module" src="{% static 'home/scripts/login.js' %}" defer></script>
 </body>
 
 </html>

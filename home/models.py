@@ -1,4 +1,5 @@
 from datetime import date
+from django.conf import settings as django_settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from sequences import get_next_value
@@ -11,6 +12,15 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(django_settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(blank=True)
+    profile_image = models.FileField(upload_to='profiles/', blank=True, null=True)
+
+    def __str__(self):
+        return f'Profile: {self.user.username}'
 
 
 class SivilStatus(models.Model):
